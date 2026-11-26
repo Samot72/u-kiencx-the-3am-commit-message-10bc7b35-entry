@@ -26,7 +26,7 @@ function validate(line: string): void {
   // Revision (coordinator): reject invisible format characters and
   // require at least one letter, so a control-char or symbol-only
   // entry can never pass validation.
-  if (/[̀-ͯ﻿­]/.test(line)) {
+  if (/[\u200B-\u200F\uFEFF\u00AD]/.test(line)) {
     throw new Error("entry contains invisible format characters");
   }
   if (!/[A-Za-z]/.test(line)) {
