@@ -23,6 +23,15 @@ function validate(line: string): void {
   if (line.trim().length === 0) {
     throw new Error("entry is empty or only whitespace");
   }
+  // Revision (coordinator): reject invisible format characters and
+  // require at least one letter, so a control-char or symbol-only
+  // entry can never pass validation.
+  if (/[̀-ͯ﻿­]/.test(line)) {
+    throw new Error("entry contains invisible format characters");
+  }
+  if (!/[A-Za-z]/.test(line)) {
+    throw new Error("entry must contain at least one letter");
+  }
   if (line.includes("\n") || line.includes("\r")) {
     throw new Error("entry must be a single line");
   }
